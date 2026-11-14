@@ -190,7 +190,7 @@ footer{padding:2rem 0 3rem;border-top:1px solid var(--line);color:var(--muted);f
     <div class="rv">
       <h2>About me</h2>
       <p>This is the personal portfolio of Tahsin Rejowan Rafin, a student at Ispahani Cantonment Public School and College, Bangladesh, who is passionate about technology, artificial intelligence, web development and leadership.</p>
-      <p>I enjoy learning new skills, exploring innovative ideas. My goal is to use technology and creativity to build meaningful projects and make a positive impact.</p>
+      <p>I enjoy learning new skills and exploring innovative ideas. My goal is to use technology and creativity to build meaningful projects and make a positive impact.</p>
       <h3>Beyond the screen</h3>
       <p>I'm someone who loves exploring the world, discovering new places, and experiencing different perspectives of life. I have a special love for travelling, especially visiting beautiful mountains, peaceful beaches, and breathtaking natural destinations.</p>
       <p>I enjoy discovering new things, meeting new people, learning from different experiences, and making unforgettable memories along the way.</p>
@@ -214,9 +214,9 @@ footer{padding:2rem 0 3rem;border-top:1px solid var(--line);color:var(--muted);f
     </ul>
     <div class="sets" hidden>
       <div class="set" id="set-travel" data-title="Travel and nature">
-        <img src="travel-1.jpg" width="924" height="1100" alt="Standing in front of a tall misty waterfall surrounded by green forest" data-cap="Standing before a misty waterfall" loading="lazy" decoding="async">
+        <img src="travel-10.jpg" width="924" height="1100" alt="Standing in front of a tall misty waterfall surrounded by green forest" data-cap="Standing before a misty waterfall" loading="lazy" decoding="async">
         <img src="travel-2.jpg" width="1100" height="1100" alt="Visitor in a cap looking out over misty green hills from a hilltop" data-cap="Above the mist" loading="lazy" decoding="async">
-        <img src="travel-9.jpg" width="880" height="1100" alt="Young man in sunglasses and a checked shirt standing among banana plants with misty green hills behind" data-cap="Among banana leaves and misty hills" loading="lazy" decoding="async">
+        <img src="travel-11.jpg" width="880" height="1100" alt="Young man in sunglasses and a checked shirt standing among banana plants with misty green hills behind" data-cap="Among banana leaves and misty hills" loading="lazy" decoding="async">
         <img src="travel-4.jpg" width="1100" height="596" alt="Silhouette of a person watching an orange sunset over the sea" data-cap="Sunset by the sea" loading="lazy" decoding="async">
         <img src="travel-5.jpg" width="1100" height="825" alt="Rider seated on a red and black motorcycle beside a river with wooden boats" data-cap="Riverside stop with wooden boats" loading="lazy" decoding="async">
         <img src="travel-6.jpg" width="1100" height="825" alt="Person with open arms facing a field and river under dark storm clouds" data-cap="Open arms under a stormy sky" loading="lazy" decoding="async">
@@ -319,11 +319,21 @@ footer{padding:2rem 0 3rem;border-top:1px solid var(--line);color:var(--muted);f
 <script>
 (function(){
   var lb=document.getElementById("lb"),im=document.getElementById("lbi"),cap=document.getElementById("lbc"),cnt=document.getElementById("lbn"),ttl=document.getElementById("lbt"),th=document.getElementById("lbs"),items=[],i=0,opener=null;
-  [].forEach.call(document.querySelectorAll(".album"),function(b){
+  function sync(b){
     var set=document.getElementById("set-"+b.getAttribute("data-set")),p=set.querySelectorAll("img");
+    if(!p.length){b.parentNode.hidden=true;return}
     b.querySelector("img").src=p[0].getAttribute("src");
     b.querySelector(".n").textContent=p.length+" photos";
+  }
+  [].forEach.call(document.querySelectorAll(".album"),function(b){
+    var set=document.getElementById("set-"+b.getAttribute("data-set"));
+    sync(b);
     b.addEventListener("click",function(){open(set,b)});
+    [].forEach.call(set.querySelectorAll("img"),function(m){
+      var t=new Image();
+      t.onerror=function(){m.remove();sync(b)};
+      t.src=m.getAttribute("src");
+    });
   });
   function show(n){
     i=(n+items.length)%items.length;var s=items[i];
